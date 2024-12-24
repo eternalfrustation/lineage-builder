@@ -20,6 +20,13 @@ jobs:
     steps:
     - name: Build 
       run: |
+        mkdir ~/bin/
+        export PATH=~/bin:$PATH
+        curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
+        chmod a+x ~/bin/repo
+        mkdir working-directory-name 
+        cd working-directory-name 
+        repo init -u git://android.git.kernel.org/platform/manifest.git
         export BUILD_NUMBER=$( (date +%s%N ; echo $CI_PIPELINE_ID; hostname) | openssl sha1 | sed -e 's/.*=//g; s/ //g' | cut -c1-10 )
         repo init -u https://github.com/lineageos/android.git -b ${VERSION}
         echo "Resetting build tree"
