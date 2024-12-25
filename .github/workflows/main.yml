@@ -22,7 +22,7 @@ jobs:
       run: |
         sudo apt-get install repo
         export BUILD_NUMBER=$( (date +%s%N ; echo $CI_PIPELINE_ID; hostname) | openssl sha1 | sed -e 's/.*=//g; s/ //g' | cut -c1-10 )
-        repo init -u https://github.com/lineageos/android.git -b ${VERSION} --git-lfs
+        repo init -u https://github.com/lineageos/android.git -b ${VERSION}
         echo "Syncing"
         repo sync
         echo "Sourcing the environment"
