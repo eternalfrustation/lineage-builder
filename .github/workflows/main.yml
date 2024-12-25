@@ -22,9 +22,9 @@ jobs:
       run: |
         sudo apt-get install repo
         export BUILD_NUMBER=$( (date +%s%N ; echo $CI_PIPELINE_ID; hostname) | openssl sha1 | sed -e 's/.*=//g; s/ //g' | cut -c1-10 )
-        repo init -u https://github.com/lineageos/android.git -b ${VERSION}
+        repo init --depth 1 -u https://github.com/lineageos/android.git -b ${VERSION}
         echo "Syncing"
-        repo sync
+        repo sync -c -j$(nproc)
         echo "Sourcing the environment"
         . build/envsetup.sh
         echo "Eating breakfast"
