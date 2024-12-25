@@ -22,20 +22,13 @@ jobs:
       run: |
         sudo apt-get install repo
         export BUILD_NUMBER=$( (date +%s%N ; echo $CI_PIPELINE_ID; hostname) | openssl sha1 | sed -e 's/.*=//g; s/ //g' | cut -c1-10 )
-        repo init -u https://github.com/lineageos/android.git -b ${VERSION}
-        echo "Resetting build tree"
-        repo forall -vc "git reset --hard" > /dev/null 2> /dev/null
+        repo init -u https://github.com/lineageos/android.git -b ${VERSION} --git-lfs
         echo "Syncing"
-        repo sync -j32 -d --force-sync > /dev/null 2> /dev/null
+        repo sync
+        echo "Sourcing the environment"
         . build/envsetup.sh
-        mka clobber
-        set +e
+        echo "Eating breakfast"
         breakfast lineage_${DEVICE}-${TYPE}
-        set -e
-        if [ "$RELEASE_TYPE" '==' "experimental" ]; then
-          repopick $EXP_PICK_CHANGES
-        fi
-        mka otatools-package target-files-package dist
         tree -a --prune -o current_working_tree.txt
 
     - name: Build 
