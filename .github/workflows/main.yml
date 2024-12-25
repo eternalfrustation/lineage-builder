@@ -21,7 +21,6 @@ jobs:
     - name: Build 
       run: |
         sudo apt-get install repo
-        repo init -u git://android.git.kernel.org/platform/manifest.git
         export BUILD_NUMBER=$( (date +%s%N ; echo $CI_PIPELINE_ID; hostname) | openssl sha1 | sed -e 's/.*=//g; s/ //g' | cut -c1-10 )
         repo init -u https://github.com/lineageos/android.git -b ${VERSION}
         echo "Resetting build tree"
