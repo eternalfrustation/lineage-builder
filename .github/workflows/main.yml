@@ -6,7 +6,7 @@ on:
       - master
 
 env:
-  VERSION: lineage-21.1
+  VERSION: lineage-22.1
   DEVICE: onclite
   TYPE: user
   RELEASE_TYPE: release
